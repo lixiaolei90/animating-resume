@@ -30,6 +30,11 @@ html {
 .token.function {
     color: #2f9c0a;
 }
+/*
+我来介绍一下我自己
+我需要一张白纸
+*/
+
 `;
 
 var n = 0;
@@ -43,5 +48,36 @@ var timer = setInterval(()=>{
   console.log('one')
   if(n >= text.length) {
     clearInterval(timer)
+    fn2()
+    fn3(text)
   }
 }, 10)
+
+function fn2() {
+  var paper = document.createElement('div');
+  paper.id = 'paper';
+  document.body.appendChild(paper);
+}
+
+function fn3(preResult) {
+  var result = `
+    #paper {
+      height: 100px;
+      width: 100px;
+      background: red;
+    }
+  `;
+  var n = 0;
+  var timer = setInterval(() => {
+    n += 1;
+    
+    code.innerHTML = preResult + result.substring(0,n);
+    code.innerHTML = Prism.highlight(code.innerHTML, Prism.languages.css, 'css')
+    sty.innerHTML = preResult + result.substring(0,n)
+    console.log('yici')
+    if(n >= result.length) {
+      clearInterval(timer)
+    }
+  },
+  5)
+}
