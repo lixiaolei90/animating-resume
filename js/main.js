@@ -18,6 +18,18 @@ html {
   border: 1px solid red;
   padding: 16px;
 }
+
+/* 我需要一点代码高亮 */
+
+.token.selector {
+    color: #690;
+}
+.token.property {
+    color: #905;
+}
+.token.function {
+    color: #2f9c0a;
+}
 `;
 
 var n = 0;
