@@ -51,6 +51,7 @@ function writeCode(pretext, text, fn) {
     var code = document.getElementById('code');
     var sty = document.getElementById('sty');
     code.innerHTML = Prism.highlight(preResult + text.substring(0, n), Prism.languages.css, 'css')
+    code.scrollTop = 1000000
     sty.innerHTML = pretext + text.substring(0, n)
     
     if (n >= text.length) {
