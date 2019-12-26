@@ -36,48 +36,62 @@ html {
 */
 
 `;
+var result = `
+#paper {
+  height: 100px;
+  width: 100px;
+  background: red;
+}
+`;
+function writeCode(pretext, text, fn) {
+  let preResult = '' || pretext ;
+  let n = 0;
+  let timer = setInterval(() => {
+    n += 1;
+    var code = document.getElementById('code');
+    var sty = document.getElementById('sty');
+    code.innerHTML = Prism.highlight(preResult + text.substring(0, n), Prism.languages.css, 'css')
+    sty.innerHTML = pretext + text.substring(0, n)
+    
+    if (n >= text.length) {
+      clearInterval(timer)
+      fn.call()
+    }
+  }, 10)
+}
 
-var n = 0;
-var timer = setInterval(()=>{
-  n += 1;
-  var code = document.getElementById('code');
-  var sty = document.getElementById('sty');
-  code.innerHTML = text.substring(0,n)
-  code.innerHTML = Prism.highlight(code.innerHTML, Prism.languages.css, 'css')
-  sty.innerHTML = text.substring(0,n)
-  console.log('one')
-  if(n >= text.length) {
-    clearInterval(timer)
-    fn2()
-    fn3(text)
-  }
-}, 10)
+writeCode('', text, ()=> {
+  createPaper(() => {
+    writeCode(text, result)
+  })
+})
 
-function fn2() {
+function createPaper(fn) {
   var paper = document.createElement('div');
   paper.id = 'paper';
   document.body.appendChild(paper);
+  fn.call()
 }
 
-function fn3(preResult) {
-  var result = `
-    #paper {
-      height: 100px;
-      width: 100px;
-      background: red;
-    }
-  `;
-  var n = 0;
-  var timer = setInterval(() => {
-    n += 1;
+// function fn3(preResult) {
+//   var result = `
+//     #paper {
+//       height: 100px;
+//       width: 100px;
+//       background: red;
+//     }
+//   `;
+//   var n = 0;
+//   var timer = setInterval(() => {
+//     n += 1;
     
-    code.innerHTML = preResult + result.substring(0,n);
-    code.innerHTML = Prism.highlight(code.innerHTML, Prism.languages.css, 'css')
-    sty.innerHTML = preResult + result.substring(0,n)
-    console.log('yici')
-    if(n >= result.length) {
-      clearInterval(timer)
-    }
-  },
-  5)
-}
+//     code.innerHTML = preResult + result.substring(0,n);
+//     code.innerHTML = Prism.highlight(code.innerHTML, Prism.languages.css, 'css')
+//     sty.innerHTML = preResult + result.substring(0,n)
+//     console.log('yici')
+//     if(n >= result.length) {
+//       clearInterval(timer)
+//     }
+//   },
+//   5)
+// }
