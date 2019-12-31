@@ -34,13 +34,33 @@ html {
 我来介绍一下我自己
 我需要一张白纸
 */
-
+#code {
+  position: fixed;
+  left: 0;
+  width: 50%;
+  height: 100%;
+}
+#paper {
+  position: fixed;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+#paper > .content {
+  background: white;
+ 
+  height: 100%;
+  width: 100%;
+}
 `;
 var result = `
 #paper {
-  height: 100px;
-  width: 100px;
-  background: red;
+ 
 }
 `;
 function writeCode(pretext, text, fn) {
@@ -70,29 +90,10 @@ writeCode('', text, ()=> {
 function createPaper(fn) {
   var paper = document.createElement('div');
   paper.id = 'paper';
+  var content = document.createElement('div');
+  content.className = 'content';
+  paper.appendChild(content)
   document.body.appendChild(paper);
   fn.call()
 }
 
-// function fn3(preResult) {
-//   var result = `
-//     #paper {
-//       height: 100px;
-//       width: 100px;
-//       background: red;
-//     }
-//   `;
-//   var n = 0;
-//   var timer = setInterval(() => {
-//     n += 1;
-    
-//     code.innerHTML = preResult + result.substring(0,n);
-//     code.innerHTML = Prism.highlight(code.innerHTML, Prism.languages.css, 'css')
-//     sty.innerHTML = preResult + result.substring(0,n)
-//     console.log('yici')
-//     if(n >= result.length) {
-//       clearInterval(timer)
-//     }
-//   },
-//   5)
-// }
