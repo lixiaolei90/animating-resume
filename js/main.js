@@ -59,9 +59,13 @@ html {
 }
 `;
 var result = `
-#paper {
- 
-}
+/*
+接下来利用marked.js把Markdown转成HTML
+*/
+`;
+
+var md = `
+# 自我介绍
 `;
 function writeCode(pretext, text, fn) {
   let preResult = '' || pretext ;
@@ -78,22 +82,60 @@ function writeCode(pretext, text, fn) {
       clearInterval(timer)
       fn.call()
     }
-  }, 10)
+  }, 0)
 }
 
+function writeMarkdown(md, fn) {
+  var text = md;
+  var domMD = document.querySelector('#paper > .content');
+  let n = 0;
+  let timer = setInterval(() => {
+    n += 1;
+
+    // domMD.innerHTML = Prism.highlight( text.substring(0, n), Prism.languages.markdown, 'markdown')
+    domMD.innerHTML = text.substring(0, n);
+    domMD.scrollTop = 1000000
+    
+    
+    if (n >= text.length) {
+      clearInterval(timer)
+      fn.call()
+    }
+  }, 0)
+}
+
+function mdToHTML(md) {
+  // var text = md;
+  var domMD = document.querySelector('#paper > .content');
+  domMD.innerHTML = marked(md)
+}
+
+// function convertMarkdownToHtml(fn){
+//   var div = document.createElement('div')  
+//   div.className = 'html markdown-body'
+//   div.innerHTML = marked(md)
+//   let markdownContainer = document.querySelector('#paper > .content')
+//   markdownContainer.replaceWith(div)
+//   fn && fn.call()
+// }
 writeCode('', text, ()=> {
   createPaper(() => {
-    writeCode(text, result)
+    writeCode(text, result, () => {
+      writeMarkdown(md,() => {
+        mdToHTML(md)
+      })
+    })
   })
 })
 
 function createPaper(fn) {
   var paper = document.createElement('div');
   paper.id = 'paper';
-  var content = document.createElement('div');
+  var content = document.createElement('pre');
   content.className = 'content';
   paper.appendChild(content)
   document.body.appendChild(paper);
   fn.call()
 }
+
 
