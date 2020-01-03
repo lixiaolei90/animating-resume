@@ -52,8 +52,8 @@ html {
   padding: 16px;
 }
 #paper > .content {
+  border: 5px solid black;
   background: white;
- 
   height: 100%;
   width: 100%;
 }
@@ -62,10 +62,13 @@ var result = `
 /*
 接下来利用marked.js把Markdown转成HTML
 */
+
 `;
 
 var md = `
 # 自我介绍
+## 一二三四
+## 二二三四
 `;
 function writeCode(pretext, text, fn) {
   let preResult = '' || pretext ;
@@ -82,7 +85,7 @@ function writeCode(pretext, text, fn) {
       clearInterval(timer)
       fn.call()
     }
-  }, 0)
+  }, 50)
 }
 
 function writeMarkdown(md, fn) {
@@ -101,23 +104,18 @@ function writeMarkdown(md, fn) {
       clearInterval(timer)
       fn.call()
     }
-  }, 0)
+  }, 50)
 }
 
 function mdToHTML(md) {
-  // var text = md;
+  var div = document.createElement('div');
+  div.className = 'html';
+  div.innerHTML = marked(md)
   var domMD = document.querySelector('#paper > .content');
-  domMD.innerHTML = marked(md)
+  domMD.replaceWith(div)
 }
 
-// function convertMarkdownToHtml(fn){
-//   var div = document.createElement('div')  
-//   div.className = 'html markdown-body'
-//   div.innerHTML = marked(md)
-//   let markdownContainer = document.querySelector('#paper > .content')
-//   markdownContainer.replaceWith(div)
-//   fn && fn.call()
-// }
+
 writeCode('', text, ()=> {
   createPaper(() => {
     writeCode(text, result, () => {

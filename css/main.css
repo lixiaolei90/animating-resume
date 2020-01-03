@@ -14,3 +14,10 @@
     height: 100vh;
     overflow: hidden;
 }
+
+#paper>.html {
+    background: white;
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+}
